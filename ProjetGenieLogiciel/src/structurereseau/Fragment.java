@@ -4,6 +4,7 @@
  */
 package structurereseau;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -11,7 +12,7 @@ import java.util.HashSet;
  *
  * @author Djeremai
  */
-public class Fragment {
+public class Fragment implements Serializable{
     
     private HashSet<Ligne> lligne;
     private Station depart;

@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author Djeremai
  */
-public class Station {
+public class Station implements Serializable {
     
     private static HashSet<Station> lstation=new HashSet<Station>();
     private String name;
@@ -31,6 +31,16 @@ public class Station {
         saveStation();
     }
 
+    public static void saveStation(){
+        try {
+            ObjectOutputStream st = new ObjectOutputStream(new FileOutputStream(new File("carte")));
+            st.writeObject(Station.lstation);
+            st.close();
+        } catch (Exception ex) {
+            System.out.println("Probleme ouverture fichier"+ex);
+        }
+    }
+    
     public static Station recherche(String nom){
         Station st = null;
         for(Station s:lstation){
@@ -41,7 +51,7 @@ public class Station {
         return st;        
     }
 
-    public static HashSet<Station> getLstation() {
+    public static HashSet<Station> loadLstation() {
         try {
             ObjectInputStream st = new ObjectInputStream(new FileInputStream(new File("carte")));
             Station.lstation=(HashSet<Station>)st.readObject();
@@ -52,15 +62,7 @@ public class Station {
         return Station.lstation;
     }
     
-    public static void saveStation(){
-        try {
-            ObjectOutputStream st = new ObjectOutputStream(new FileOutputStream(new File("carte")));
-            st.writeObject(Station.lstation);
-            st.close();
-        } catch (Exception ex) {
-            System.out.println("Probleme ouverture fichier");
-        }
-    }
+    
     /*
     public void addStation(Station s, Fragment f){
         Station arr = f.getArrivee();
@@ -71,6 +73,11 @@ public class Station {
     public void addFragment(Fragment f){
         this.lfrag.add(f);
     }
+
+    public static HashSet<Station> getLstation() {
+        return lstation;
+    }
+    
     
     public boolean isIncident() {
         return incident;
@@ -87,7 +94,10 @@ public class Station {
     public int getTps_arret() {
         return tps_arret;
     }
-    
+
+    public ArrayList<Fragment> getLfrag() {
+        return lfrag;
+    }
     
     
 }

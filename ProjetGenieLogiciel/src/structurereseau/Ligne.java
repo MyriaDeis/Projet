@@ -4,13 +4,14 @@
  */
 package structurereseau;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Djeremai
  */
-public class Ligne {
+public class Ligne implements Serializable{
     
     private ArrayList<Fragment> lfrag;
     private int numero;
