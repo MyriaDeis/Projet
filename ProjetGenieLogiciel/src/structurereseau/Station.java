@@ -209,6 +209,31 @@ public class Station implements Serializable {
             GestionFichier.saveReseau();
         }
     }
+
+	public ArrayList<Fragment> chemin(ArrayList<Fragment> parcours, Station but) { // parcours : effectué jusqu'à présent
+		if (parcours.equals(null)) { // on commence la recherche
+			for (Fragment f : lfrag) {
+				ArrayList<Fragment> tmp = new ArrayList<Fragment>();
+				tmp.add(f);
+				chemin(tmp, but);
+			}
+		} else {
+			if (parcours.get(parcours.size()).getArrivee().compareTo(but.name) == 0) {
+				// condition d'arrêt
+				return parcours;
+			} else {
+				Station s_tmp = lstation.get(parcours.get(parcours.size()).getArrivee());
+				for (Fragment f : s_tmp.lfrag) {
+					if (parcours.get(parcours.size()).getArrivee().compareTo(f.getDepart()) == 0) {
+						ArrayList<Fragment> copieParcours = parcours;
+						copieParcours.add(f);
+						chemin(copieParcours, but);
+					}
+				}	
+			}
+		}
+		return null;
+	}
     
     
     
