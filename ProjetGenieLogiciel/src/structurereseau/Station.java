@@ -235,6 +235,12 @@ public class Station implements Serializable {
 		return null;
 	}
     
+	public int tempsEntre2Stations(Station but) {
+		int res = 0;
+		for (Fragment f : chemin(null, but)) // appel de la méthode qui trouve le chemin entre 2 stations
+			res += f.getTps_parcours();
+		return res;
+	}
     
     
     public static Station recherche(String nom){
@@ -242,7 +248,12 @@ public class Station implements Serializable {
         return st;        
     }
     
-    
+    public ArrayList<Station> stationsProches() {
+    	ArrayList<Station> tmp = new ArrayList<Station>();
+    	for (Fragment f : lfrag)
+    		tmp.add(recherche(f.getDepart()));
+    	return tmp;
+    }
     
     
     /*
