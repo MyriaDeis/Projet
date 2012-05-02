@@ -4,9 +4,13 @@
  */
 package structurereseau;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import org.junit.*;
 import static org.junit.Assert.*;
+import principal.GestionFichier;
 
 /**
  *
@@ -16,60 +20,40 @@ public class StationTest {
     
     public StationTest() {
     }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
     
     @Before
     public void setUp() {
+        Station s1 = new Station("stat", true, 4); 
+        Station s2 = new Station("stat2", true, 5); 
+        GestionFichier.saveReseau();
     }
     
-    @After
-    public void tearDown() {
-    }
 
+    /**
+     * Test of saveStation method, of class Station.
+     *//*
+    @Test
+    public void testSaveStation() {
+        System.out.println("saveStation");
+        Station.saveStation();
+        
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }*/
+    
     /**
      * Test of recherche method, of class Station.
      */
     @Test
     public void testRecherche() {
         System.out.println("recherche");
-        String nom = "";
-        Station expResult = null;
+        String nom = "stat";
+        
+        String expResult = "stat";
         Station result = Station.recherche(nom);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(expResult, result.getName());
     }
 
-    /**
-     * Test of getLstation method, of class Station.
-     */
-    @Test
-    public void testGetLstation() {
-        System.out.println("getLstation");
-        HashSet expResult = null;
-        HashSet result = Station.getLstation();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of saveStation method, of class Station.
-     */
-    @Test
-    public void testSaveStation() {
-        System.out.println("saveStation");
-        Station.saveStation();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of addFragment method, of class Station.
@@ -80,62 +64,8 @@ public class StationTest {
         Fragment f = null;
         Station instance = null;
         instance.addFragment(f);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
-    /**
-     * Test of isIncident method, of class Station.
-     */
-    @Test
-    public void testIsIncident() {
-        System.out.println("isIncident");
-        Station instance = null;
-        boolean expResult = false;
-        boolean result = instance.isIncident();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setIncident method, of class Station.
-     */
-    @Test
-    public void testSetIncident() {
-        System.out.println("setIncident");
-        boolean incident = false;
-        Station instance = null;
-        instance.setIncident(incident);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getName method, of class Station.
-     */
-    @Test
-    public void testGetName() {
-        System.out.println("getName");
-        Station instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getTps_arret method, of class Station.
-     */
-    @Test
-    public void testGetTps_arret() {
-        System.out.println("getTps_arret");
-        Station instance = null;
-        int expResult = 0;
-        int result = instance.getTps_arret();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    
 }

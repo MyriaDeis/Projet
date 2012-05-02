@@ -14,13 +14,13 @@ import java.util.HashSet;
  */
 public class Fragment implements Serializable{
     
-    private HashSet<Ligne> lligne;
-    private Station depart;
-    private Station arrivee;
+    private int lligne;
+    private String depart;
+    private String arrivee;
     private int tps_parcours;
     private boolean incident;
 
-    public Fragment(HashSet<Ligne> lligne, Station depart, Station arrivee, int tps_parcours, boolean incident) {
+    public Fragment(int lligne, String depart, String arrivee, int tps_parcours, boolean incident) {
         this.lligne = lligne;
         this.depart = depart;
         this.arrivee = arrivee;
@@ -28,8 +28,7 @@ public class Fragment implements Serializable{
         this.incident = incident;
     }
 
-    
-    
+ 
     public boolean isIncident() {
         return incident;
     }
@@ -38,23 +37,23 @@ public class Fragment implements Serializable{
         this.incident = incident;
     }
 
-    public Station getArrivee() {
+    public String getArrivee() {
         return arrivee;
     }
 
-    public void setArrivee(Station arrivee) {
+    public void setArrivee(String arrivee) {
         this.arrivee = arrivee;
     }
 
-    public Station getDepart() {
+    public String getDepart() {
         return depart;
     }
 
-    public void setDepart(Station depart) {
+    public void setDepart(String depart) {
         this.depart = depart;
     }
 
-    public HashSet<Ligne> getLligne() {
+    public int getLligne() {
         return lligne;
     }
     
