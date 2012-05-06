@@ -6,6 +6,7 @@ package principal;
 
 import structurereseau.Fragment;
 import structurereseau.Station;
+import structurereseau.Ligne;
 
 /**
  *
@@ -13,6 +14,7 @@ import structurereseau.Station;
  */
 public class Main {
      public static void main(String[] args){
-        Station.initialiseCarte();
+     	Station.initialiseCarte();
+        Ligne.printWays();
     }
 }

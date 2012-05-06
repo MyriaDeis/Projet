@@ -30,7 +30,7 @@ public class Station implements Serializable {
         this.lfrag = new HashSet<Fragment>();
         this.incident = incident;
         this.tps_arret = tps_arret;
-        lstation.put(name, this);
+        Station.lstation.put(name, this);
     }
 
     public static void initialiseCarte(){
@@ -82,6 +82,7 @@ public class Station implements Serializable {
             charl.addFragment(f2);
             charl.addFragment(f6);
             charl.addFragment(f7);
+            charl.addFragment(f28);
             Station chatel = new Station("Châtelet", false, 2);
             chatel.addFragment(f2);
             chatel.addFragment(f3);

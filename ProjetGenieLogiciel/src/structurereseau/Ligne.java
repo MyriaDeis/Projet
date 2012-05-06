@@ -47,5 +47,45 @@ public class Ligne implements Serializable{
     public static void setlLignes(HashMap<Integer, Ligne> lLignes) {
         Ligne.lLignes = lLignes;
     }
+
+    public static void printWays(){
+        ArrayList<ArrayList<Fragment>> chemins=Ligne.findWays("La Défense", "Place d'Italie");
+        System.out.println("il y a "+chemins.size()+" de chemin");
+        for(ArrayList<Fragment> chemin:chemins){
+            System.out.println("Chemin : ");
+            for(Fragment frag:chemin){
+                System.out.print(frag+" => ");
+            }
+            System.out.println("\n");
+        }
+    }
+
+    public static ArrayList<ArrayList<Fragment>> findWays(String depart, String search){
+        Station stat=Station.recherche(depart);
+        ArrayList<ArrayList<Fragment>> chemins=new ArrayList<ArrayList<Fragment>>();
+        for(Fragment f:stat.getLfrag()){
+            if(f.getDepart().compareTo(depart)==0){
+                ArrayList<Fragment> chemin=new ArrayList<Fragment>();
+                Ligne.findWaysReccur(f, search, chemins, chemin);
+            }
+        }
+        return chemins;
+    }
+
+    private static void findWaysReccur(Fragment troncon, String search, ArrayList<ArrayList<Fragment>> chemins, ArrayList<Fragment> chemin){
+        chemin.add(troncon);
+        if(troncon.getArrivee().compareTo(search)==0)
+            chemins.add(chemin);
+        else{
+            Station stat=Station.recherche(troncon.getArrivee());
+            for(Fragment f:stat.getLfrag()){
+                if(f.getDepart().compareTo(troncon.getArrivee())==0){
+                    ArrayList<Fragment> cheminClone=(ArrayList<Fragment>)chemin.clone();
+                    Ligne.findWaysReccur(f, search, chemins, cheminClone);
+                }
+            }
+        }
+
+    }
     
 }

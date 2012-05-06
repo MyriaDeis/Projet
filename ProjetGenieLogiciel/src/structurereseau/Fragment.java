@@ -56,6 +56,10 @@ public class Fragment implements Serializable{
     public int getLligne() {
         return lligne;
     }
+
+    public String toString(){
+        return depart+" -> "+arrivee;
+    }
     
     
     
