@@ -248,7 +248,7 @@ public class Station implements Serializable {
 		return list;
 	}
     
-	public static ArrayList<Fragment> fatestWay(Station depart, Station but) {
+	public static ArrayList<Fragment> fastestWay(Station depart, Station but) {
 		int temps_parcours = 2222, tmp;
 		ArrayList<Fragment> itineraire = new ArrayList<Fragment>();
 		ArrayList<ArrayList<Fragment>> list = chemin(null, depart, but, new ArrayList<ArrayList<Fragment>>());
