@@ -58,7 +58,96 @@ public class Ligne implements Serializable{
             }
             System.out.println("\n");
         }
+
+        System.out.println("Rapide : ");
+        ArrayList<Fragment> chemin=Ligne.fastestWay("La Défense", "Place d'Italie");
+        for(Fragment frag:chemin){
+            System.out.print(frag+" => ");
+        }
+        System.out.println("\n");
+
+        System.out.println("moins de changement : ");
+        chemin=Ligne.fastestWay("La Défense", "Place d'Italie");
+        for(Fragment frag:chemin){
+            System.out.print(frag+" => ");
+        }
+        System.out.println("\n");
+
+        System.out.println("personnalisé : ");
+        chemin=Ligne.personalWay("La Défense", "Père Lachaise", "Place d'Italie");
+        if(chemin!=null){
+            for(Fragment frag:chemin){
+                System.out.print(frag+" => ");
+            }
+            System.out.println("\n");
+        }
+        else
+            System.out.println("Aucun Chemin personnalisé");
     }
+
+    public static ArrayList<Fragment> fastestWay(String depart, String arrivee){
+        ArrayList<ArrayList<Fragment>> chemins=Ligne.findWays(depart, arrivee);
+
+        if(chemins.size()!=0){
+            int sizeMin=-1;
+            int ind=0;
+            for(int i=0; i<chemins.size(); i++){
+                int temp=0;
+                for(Fragment f:chemins.get(i)){
+                    temp+=f.getTemps();
+                }
+                if(sizeMin>temp || sizeMin==-1){
+                    ind=i;
+                    sizeMin=temp;
+                }
+
+            }
+            return chemins.get(ind);
+        }
+        else
+            return null;
+    }
+
+    public static ArrayList<Fragment> bestWay(String depart, String arrivee){
+        ArrayList<ArrayList<Fragment>> chemins=Ligne.findWays(depart, arrivee);
+
+        if(chemins.size()!=0){
+            int changementMin=-1;
+            int ind=0;
+            for(int i=0; i<chemins.size(); i++){
+                int temp=0;
+                int ligne=chemins.get(i).get(0).getLligne();
+                for(Fragment f:chemins.get(i)){
+                    if(f.getLligne()!=ligne){
+                        temp++;
+                        ligne=f.getLligne();
+                    }
+                }
+                if(changementMin>temp || changementMin==-1){
+                    ind=i;
+                    changementMin=temp;
+                }
+            }
+            return chemins.get(ind);
+        }
+        else
+            return null;
+    }
+
+    public static ArrayList<Fragment> personalWay(String depart, String inter, String arrivee){
+        //retourne null si aucun chemin
+        ArrayList<Fragment> chemin=Ligne.bestWay(depart, inter);
+        ArrayList<Fragment> chemin2=Ligne.bestWay(inter, arrivee);
+        if(chemin!=null && chemin2!=null){
+            System.out.println(chemin.size()+" "+chemin2.size());
+            chemin.addAll(chemin2);
+            return chemin;
+        }
+        else
+            return null;
+    }
+
+
 
     public static ArrayList<ArrayList<Fragment>> findWays(String depart, String search){
         Station stat=Station.recherche(depart);
