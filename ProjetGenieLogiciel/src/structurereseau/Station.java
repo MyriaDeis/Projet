@@ -218,40 +218,93 @@ public class Station implements Serializable {
 
     }
 
-	public ArrayList<Fragment> chemin(ArrayList<Fragment> parcours, Station but) { // parcours : effectuï¿½ jusqu'ï¿½ prï¿½sent
-		if (parcours.equals(null)) { // on commence la recherche
-			for (Fragment f : lfrag) {
+/*
+ * en principe terminé
+ */
+    public static ArrayList<ArrayList<Fragment>> chemin(ArrayList<Fragment> parcours, Station depart, Station but, ArrayList<ArrayList<Fragment>> list) { // parcours : effectuï¿½ jusqu'ï¿½ prï¿½sent
+		if (parcours.size() == 0) { // on commence la recherche
+			for (Fragment f : depart.lfrag) {
 				ArrayList<Fragment> tmp = new ArrayList<Fragment>();
 				tmp.add(f);
-				chemin(tmp, but);
+				chemin(tmp, depart, but, list);
 			}
 		} else {
-			if (parcours.get(parcours.size()).getArrivee().compareTo(but.name) == 0) {
-				// condition d'arrï¿½t
-				return parcours;
+			if (parcours.get(parcours.size()).getArrivee().compareTo(but.name) == 0) { // condition d'arrêt : chemin trouvé entre les 2 stations
+				// ajout de ce parcours à " tous "
+				list.add(parcours);
 			} else {
+				// sinon on explore les fragments suivants
 				Station s_tmp = lstation.get(parcours.get(parcours.size()).getArrivee());
 				for (Fragment f : s_tmp.lfrag) {
-					if (parcours.get(parcours.size()).getArrivee().compareTo(f.getDepart()) == 0) {
+					// 																		.. et si on n'est pas déjà passé par ce fragment
+					if (parcours.get(parcours.size()).getArrivee().compareTo(f.getDepart()) == 0 && !(parcours.contains(f))) {
 						ArrayList<Fragment> copieParcours = parcours;
 						copieParcours.add(f);
-						chemin(copieParcours, but);
+						chemin(copieParcours, depart, but, list);
 					}
 				}	
 			}
 		}
-		return null;
+		return list;
 	}
     
-	public int tempsEntre2Stations(Station but) {
-		int res = 0;
-		for (Fragment f : chemin(null, but)) // appel de la mï¿½thode qui trouve le chemin entre 2 stations
-			res += f.getTps_parcours();
-		return res;
+	public static ArrayList<Fragment> fatestWay(Station depart, Station but) {
+		int temps_parcours = 2222, tmp;
+		ArrayList<Fragment> itineraire = new ArrayList<Fragment>();
+		ArrayList<ArrayList<Fragment>> list = chemin(null, depart, but, new ArrayList<ArrayList<Fragment>>());
+		for (ArrayList<Fragment> l : list) {
+			tmp = 0;
+			for (Fragment f : l)
+				tmp += f.getTps_parcours();
+			if (tmp < temps_parcours) {
+				temps_parcours = tmp;
+				itineraire = l;
+			}
+		}
+		return itineraire;
 	}
-    
-    
-    public static Station recherche(String nom){
+	
+/*
+ * itinéraire avec le moins de changements de ligne
+ */
+	public static ArrayList<Fragment> bestWay(Station depart, Station but) {
+		int nb_chgt = 5555, tmp = 0;
+		ArrayList<Fragment> itineraire = new ArrayList<Fragment>();
+		ArrayList<ArrayList<Fragment>> list = chemin(null, depart, but, new ArrayList<ArrayList<Fragment>>());
+		for (ArrayList<Fragment> l : list) {
+			tmp = l.size();
+			if (tmp < nb_chgt) {
+				itineraire = l;
+				nb_chgt = tmp;
+			}
+		}
+		return itineraire;
+	}
+/*
+ * itinéraire personnalisé (et le plus rapide)
+ */
+	public static ArrayList<Fragment> personnalWay(Station depart, Station desiree, Station but) {
+		boolean passeParDesiree;
+		int temps_parcours = 2222, tmp;
+		ArrayList<Fragment> itineraire = new ArrayList<Fragment>();
+		ArrayList<ArrayList<Fragment>> list = chemin(null, depart, but, new ArrayList<ArrayList<Fragment>>());
+		for (ArrayList<Fragment> l : list) {
+			passeParDesiree = false;
+			tmp = 0;
+			for (Fragment f : l) {
+				tmp += f.getTps_parcours();
+				if (f.getArrivee().compareTo(desiree.name) == 0)
+					passeParDesiree = true;
+			}
+			if (tmp < temps_parcours && passeParDesiree) {
+				temps_parcours = tmp;
+				itineraire = l;
+			}
+		}
+		return itineraire;
+	}
+	
+	public static Station recherche(String nom){
         Station st = lstation.get(nom);      
         return st;        
     }
