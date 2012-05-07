@@ -21,7 +21,7 @@ public class LigneTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        Station.initialiseCarte();
+        Station.initialiseReseau();
         //incident sur le fragment chatelet-bastille
         Ligne l1 = Ligne.getlLignes().get(1);
         System.out.println("l1 : "+l1.getNumero());

@@ -33,12 +33,22 @@ public class Station implements Serializable {
         lstation.put(name, this);
     }
 
+ /*
+ * mÃ©thode initialiseCarte utilise un fichier de sauvegarde pour initialiser le rÃ©seau si il est prÃ©sent, sinon il
+ * le crÃ©e puis le sauvegarde
+ */  
     public static void initialiseCarte(){
         File reseau = new File("carte");
         if(reseau.exists()){
             GestionFichier.loadReseau();           
         }else{
-            //ligne 1 - fragments
+            initialiseReseau();
+            GestionFichier.saveReseau();
+        }
+    }
+    
+    public static void initialiseReseau(){
+        //ligne 1 - fragments
             Fragment f1 = new Fragment(1, "La DÃ©fense", "Charles de Gaulle", 5, false);
             Fragment f2 = new Fragment(1, "Charles de Gaulle", "ChÃ¢telet", 2, false);
             Fragment f3 = new Fragment(1, "ChÃ¢telet", "Bastille", 9, false);
@@ -206,11 +216,9 @@ public class Station implements Serializable {
             six.addFragment(f29);
             six.addFragment(f30);
 
-            GestionFichier.saveReseau();
-        }
     }
 
-	public ArrayList<Fragment> chemin(ArrayList<Fragment> parcours, Station but) { // parcours : effectué jusqu'à présent
+	public ArrayList<Fragment> chemin(ArrayList<Fragment> parcours, Station but) { // parcours : effectuï¿½ jusqu'ï¿½ prï¿½sent
 		if (parcours.equals(null)) { // on commence la recherche
 			for (Fragment f : lfrag) {
 				ArrayList<Fragment> tmp = new ArrayList<Fragment>();
@@ -219,7 +227,7 @@ public class Station implements Serializable {
 			}
 		} else {
 			if (parcours.get(parcours.size()).getArrivee().compareTo(but.name) == 0) {
-				// condition d'arrêt
+				// condition d'arrï¿½t
 				return parcours;
 			} else {
 				Station s_tmp = lstation.get(parcours.get(parcours.size()).getArrivee());
@@ -237,7 +245,7 @@ public class Station implements Serializable {
     
 	public int tempsEntre2Stations(Station but) {
 		int res = 0;
-		for (Fragment f : chemin(null, but)) // appel de la méthode qui trouve le chemin entre 2 stations
+		for (Fragment f : chemin(null, but)) // appel de la mï¿½thode qui trouve le chemin entre 2 stations
 			res += f.getTps_parcours();
 		return res;
 	}
