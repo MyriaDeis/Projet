@@ -67,7 +67,7 @@ public class Ligne implements Serializable{
         System.out.println("\n");
 
         System.out.println("moins de changement : ");
-        chemin=Ligne.fastestWay("La Défense", "Place d'Italie");
+        chemin=Ligne.bestWay("La Défense", "Place d'Italie");
         for(Fragment frag:chemin){
             System.out.print(frag+" => ");
         }
@@ -94,7 +94,8 @@ public class Ligne implements Serializable{
             for(int i=0; i<chemins.size(); i++){
                 int temp=0;
                 for(Fragment f:chemins.get(i)){
-                    temp+=f.getTemps();
+                    Station statDepart=Station.recherche(f.getDepart());
+                    temp+=f.getTemps()+statDepart.getTps_arret(); //tsp darret
                 }
                 if(sizeMin>temp || sizeMin==-1){
                     ind=i;
@@ -153,7 +154,8 @@ public class Ligne implements Serializable{
         Station stat=Station.recherche(depart);
         ArrayList<ArrayList<Fragment>> chemins=new ArrayList<ArrayList<Fragment>>();
         for(Fragment f:stat.getLfrag()){
-            if(f.getDepart().compareTo(depart)==0){
+            Station statArr=Station.recherche(f.getArrivee());
+            if(f.getDepart().compareTo(depart)==0 && !f.isIncident() && !statArr.isIncident()){
                 ArrayList<Fragment> chemin=new ArrayList<Fragment>();
                 Ligne.findWaysReccur(f, search, chemins, chemin);
             }
@@ -168,7 +170,8 @@ public class Ligne implements Serializable{
         else{
             Station stat=Station.recherche(troncon.getArrivee());
             for(Fragment f:stat.getLfrag()){
-                if(f.getDepart().compareTo(troncon.getArrivee())==0){
+                Station statArr=Station.recherche(f.getArrivee());
+                if(f.getDepart().compareTo(troncon.getArrivee())==0 && !f.isIncident() && !statArr.isIncident()){ //incident
                     ArrayList<Fragment> cheminClone=(ArrayList<Fragment>)chemin.clone();
                     Ligne.findWaysReccur(f, search, chemins, cheminClone);
                 }
