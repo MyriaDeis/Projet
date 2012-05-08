@@ -28,7 +28,6 @@ public class LigneTest {
         l1.getLfrag().get(2).setIncident(true);
         //incident sur la station Réaumur Sébastopol et Barbès
         Station.getLstation().get("Réaumur Sébastopol").setIncident(true);
-        Station.getLstation().get("Barbès").setIncident(true);
     }
    
     /**
