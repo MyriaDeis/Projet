@@ -47,5 +47,24 @@ public class Ligne implements Serializable{
     public static void setlLignes(HashMap<Integer, Ligne> lLignes) {
         Ligne.lLignes = lLignes;
     }
-    
+
+    public ArrayList<Fragment> getLfrag() {
+        return lfrag;
+    }
+
+    public static ArrayList<Fragment> fastestWay(String depart, String arrivee){
+            return null;
+    }
+
+    public static ArrayList<Fragment> bestWay(String depart, String arrivee){
+            return null;
+    }
+
+    public static ArrayList<Fragment> personalWay(String depart, String inter, String arrivee){
+            return null;
+    }
+
 }
+
+
+
