@@ -74,7 +74,7 @@ public class Main {
                             ArrayList<Station> fstation = statCourante.stationsProches();
                             System.out.println("Stations proches de "+statCourante.getName()+" :\n");
                             for (int i = 0; i < fstation.size(); i++) {
-                                System.out.println(fstation.get(i).getName()+"\n");
+                                System.out.println(fstation.get(i).getName());
                             }
 
                             break;
