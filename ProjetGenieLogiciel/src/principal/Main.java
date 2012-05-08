@@ -39,20 +39,20 @@ public class Main {
                 case 1 :
                         System.out.println("A quelle station voulez-vous arriver?");
                         String s = sc.next();
-                        System.out.println(Station.afficheTrajet(Station.fastestWay(statCourante.getName(), s)));
+                        System.out.println(Station.afficheTrajet(Ligne.fastestWay(statCourante.getName(), s)));
                         break;
                 case 2 :
                         System.out.println("A quelle station voulez-vous arriver?");
                         String sa = sc.next();
                         System.out.println("Itinéraire avec le moins de changment de ligne possible :\n");
-                        System.out.println(Station.afficheTrajet(Station.bestWay(statCourante.getName(), sa)));
+                        System.out.println(Station.afficheTrajet(Ligne.bestWay(statCourante.getName(), sa)));
                         break;
                 case 3 :
                         System.out.println("A quelle station voulez-vous arriver?");
                         String st = sc.next();
                         System.out.println("Par quelle station voulez-vous passer?");
                         String perso = sc.next();
-                        System.out.println(Station.afficheTrajet(Station.personalWay(statCourante.getName(), perso, st)));
+                        System.out.println(Station.afficheTrajet(Ligne.personalWay(statCourante.getName(), perso, st)));
                         break;
                 case 4 :
                         System.out.println("Quelle est la ligne dont vous voulez connaitre l'état?");
