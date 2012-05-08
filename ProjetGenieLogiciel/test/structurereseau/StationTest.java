@@ -45,7 +45,7 @@ public class StationTest {
         Station result = Station.recherche(nom);
         assertEquals(expResult, result.getName());
     }
-/*
+
     @Test
     public void testTempsEntre2Stations() {
     	ArrayList<Station> list = (ArrayList<Station>) Station.getLstation().values();
@@ -53,11 +53,11 @@ public class StationTest {
     	while (! s1.equals(s2)) {
     		s2 = list.get((int) (Math.random() * list.size()));
     	}
-		assertEquals(s1.tempsEntre2Stations(s2), s2.tempsEntre2Stations(s1));
+		assertEquals(Station.tempsEntre2Stations(s1.getName(), s2.getName()), Station.tempsEntre2Stations(s2.getName(), s1.getName()));
     }
-  */  
+    
     @Test
-	public void testStationsProches() { // �a marche nickel !
+	public void testStationsProches() {
     	ArrayList<Station> tmp;
     	for (Station s : Station.getLstation().values()) {
     		tmp = new ArrayList<Station>();

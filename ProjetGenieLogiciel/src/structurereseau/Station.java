@@ -513,4 +513,16 @@ public class Station implements Serializable {
     	}
     	return ret;
     }
+      
+     public static int tempsEntre2Stations(String s1, String s2) {
+                ArrayList<Fragment> itineraire = Ligne.fastestWay(s1, s2);
+                if (itineraire.size() == 0)
+                        return -1;
+                else {
+                        int res = 0;
+                        for (Fragment f : itineraire)
+                                res += f.getTps_parcours();
+                        return res;
+                }
+        }
 }

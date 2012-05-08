@@ -24,11 +24,6 @@ public class Ligne implements Serializable{
         lLignes.put(numero, this);
     }
 
-    /*public void addFragment(Station s, Fragment f, int tps) {
-        Fragment frag = new Fragment(f.getLligne(), f.getArrivee(), s, tps, false);   
-        s.addFragment(f);
-        lfrag.add(lfrag.indexOf(f), frag);
-    }*/
     
     public void addFragment(Fragment f){
         lfrag.add(f);
@@ -72,8 +67,10 @@ public class Ligne implements Serializable{
             }
             return chemins.get(ind);
         }
-        else
+        else{
+            System.out.println("la fonction retourne null");
             return null;
+        }
     }
 
     public static ArrayList<Fragment> bestWay(String depart, String arrivee){
@@ -119,32 +116,35 @@ public class Ligne implements Serializable{
     public static ArrayList<ArrayList<Fragment>> findWays(String depart, String search){
         Station stat=Station.recherche(depart);
         ArrayList<ArrayList<Fragment>> chemins=new ArrayList<ArrayList<Fragment>>();
+        ArrayList<Station> visited=new ArrayList<Station>();
         for(Fragment f:stat.getLfrag()){
             Station statArr=Station.recherche(f.getArrivee());
             if(f.getDepart().compareTo(depart)==0 && !f.isIncident() && !statArr.isIncident()){
                 ArrayList<Fragment> chemin=new ArrayList<Fragment>();
-                Ligne.findWaysReccur(f, search, chemins, chemin);
+                Ligne.findWaysReccur(f, search, chemins, chemin, visited);
             }
         }
         return chemins;
     }
 
-    private static void findWaysReccur(Fragment troncon, String search, ArrayList<ArrayList<Fragment>> chemins, ArrayList<Fragment> chemin){
+    private static void findWaysReccur(Fragment troncon, String search, ArrayList<ArrayList<Fragment>> chemins, ArrayList<Fragment> chemin, ArrayList<Station> visited){
         chemin.add(troncon);
+        visited.add(Station.recherche(troncon.getArrivee()));
         if(troncon.getArrivee().compareTo(search)==0)
             chemins.add(chemin);
         else{
             Station stat=Station.recherche(troncon.getArrivee());
             for(Fragment f:stat.getLfrag()){
                 Station statArr=Station.recherche(f.getArrivee());
-                if(f.getDepart().compareTo(troncon.getArrivee())==0 && !f.isIncident() && !statArr.isIncident()){ //incident
+                 if(f.getDepart().compareTo(troncon.getArrivee())==0 && !f.isIncident() && !statArr.isIncident() && visited.indexOf(Station.recherche(f.getArrivee()))==-1){ //incident
                     ArrayList<Fragment> cheminClone=(ArrayList<Fragment>)chemin.clone();
-                    Ligne.findWaysReccur(f, search, chemins, cheminClone);
+                    Ligne.findWaysReccur(f, search, chemins, cheminClone, (ArrayList<Station>)visited.clone());
                 }
             }
         }
 
     }
+
     
     public String avertIncident() {
     	String ret = "Pas d'incident sur la ligne.";

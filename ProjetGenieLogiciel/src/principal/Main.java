@@ -31,7 +31,7 @@ public class Main {
             System.out.println("6-Connaitre les stations les plus proches");
             System.out.println("7-Connaitre le temps de trajet entre deux stations");
             System.out.println("8-Quitter");
-                try{
+               try{
                     chx = sc.nextInt();
                     switch(chx) {
 
@@ -85,7 +85,7 @@ public class Main {
                             System.out.println("Quelle est la station ou vous voulez arriver?");
                             String sarr = sc.next();
                             sarr+=sc.nextLine();
-                            int tps = 0;//Station.getTempsParcours(sdep, sarr);
+                            int tps = Station.tempsEntre2Stations(sdep, sarr);
                             System.out.println("Entre la station " + sdep + " et la station " + sarr + ", il y a " + tps + " minutes de trajet");
                             break;
                     case 8 :
