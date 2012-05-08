@@ -146,6 +146,16 @@ public class Ligne implements Serializable{
         }
 
     }
+    
+    public String avertIncident() {
+    	String ret = "Pas d'incident sur la ligne.";
+    	for(int i = 0; i < lfrag.size(); i++) {
+    		if (lfrag.get(i).isIncident() || Station.recherche(lfrag.get(i).getDepart()).isIncident() || Station.recherche(lfrag.get(i).getArrivee()).isIncident()) {
+    			ret = ("Incident en cours sur la ligne " + this.numero);
+    		}	
+    	}
+    	return ret;
+    }
 }
 
 

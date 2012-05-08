@@ -34,8 +34,8 @@ public class Station implements Serializable {
     }
 
  /*
- * méthode initialiseCarte utilise un fichier de sauvegarde pour initialiser le réseau si il est présent, sinon il
- * le crée puis le sauvegarde
+ * methode initialiseCarte utilise un fichier de sauvegarde pour initialiser le reseau si il est present, sinon il
+ * le cree puis le sauvegarde
  */  
     public static void initialiseCarte(){
         File reseau = new File("carte");
@@ -49,43 +49,43 @@ public class Station implements Serializable {
     
     public static void initialiseReseau(){
         //ligne 1 - fragments
-            Fragment f1 = new Fragment(1, "La Défense", "Charles de Gaulle", 5, false);
-            Fragment f2 = new Fragment(1, "Charles de Gaulle", "Châtelet", 2, false);
-            Fragment f3 = new Fragment(1, "Châtelet", "Bastille", 9, false);
+            Fragment f1 = new Fragment(1, "La Defense", "Charles de Gaulle", 5, false);
+            Fragment f2 = new Fragment(1, "Charles de Gaulle", "Chatelet", 2, false);
+            Fragment f3 = new Fragment(1, "Chatelet", "Bastille", 9, false);
             Fragment f4 = new Fragment(1, "Bastille", "Nation", 7, false);
             Fragment f5 = new Fragment(1, "Nation", "Chateau de Vincennes", 10, false);
             //ligne 2 - fragments
             Fragment f6 = new Fragment(2, "Porte Dauphine", "Charles de Gaulle", 4, false);
             Fragment f7 = new Fragment(2, "Charles de Gaulle", "Villiers", 6, false);
-            Fragment f8 = new Fragment(2, "Villiers", "Barbès", 10, false);
-            Fragment f9 = new Fragment(2, "Barbès", "Stalingrad", 8, false);
-            Fragment f10 = new Fragment(2, "Stalingrad", "Père Lachaise", 7, false);
-            Fragment f11 = new Fragment(2, "Père Lachaise", "Nation", 4, false);
+            Fragment f8 = new Fragment(2, "Villiers", "Barbes", 10, false);
+            Fragment f9 = new Fragment(2, "Barbes", "Stalingrad", 8, false);
+            Fragment f10 = new Fragment(2, "Stalingrad", "Pere Lachaise", 7, false);
+            Fragment f11 = new Fragment(2, "Pere Lachaise", "Nation", 4, false);
             //ligne 3 - fragments
             Fragment f12 = new Fragment(3, "Pont de Levallois", "Villiers", 9, false);
-            Fragment f13 = new Fragment(3, "Villiers", "Réaumur Sébastopol", 12, false);
-            Fragment f14 = new Fragment(3, "Réaumur Sébastopol", "République", 4, false);
-            Fragment f15 = new Fragment(3, "République", "Père Lachaise", 8, false);
-            Fragment f16 = new Fragment(3, "Père Lachaise", "Gallieni", 6, false);
+            Fragment f13 = new Fragment(3, "Villiers", "Reaumur Sebastopol", 12, false);
+            Fragment f14 = new Fragment(3, "Reaumur Sebastopol", "Republique", 4, false);
+            Fragment f15 = new Fragment(3, "Republique", "Pere Lachaise", 8, false);
+            Fragment f16 = new Fragment(3, "Pere Lachaise", "Gallieni", 6, false);
             //ligne 4 - fragments
-            Fragment f17 = new Fragment(4, "Porte de Clignancourt", "Barbès", 5, false);
-            Fragment f18 = new Fragment(4, "Barbès", "Gare du Nord", 3, false);
-            Fragment f19 = new Fragment(4, "Gare du Nord", "Réaumur Sébastopol", 5, false);
-            Fragment f20 = new Fragment(4, "Réaumur Sébastopol", "Châtelet", 3, false);
-            Fragment f21 = new Fragment(4, "Châtelet", "Montparnasse", 13, false);
-            Fragment f22 = new Fragment(4, "Montparnasse", "Porte d'Orléans", 6, false);
+            Fragment f17 = new Fragment(4, "Porte de Clignancourt", "Barbes", 5, false);
+            Fragment f18 = new Fragment(4, "Barbes", "Gare du Nord", 3, false);
+            Fragment f19 = new Fragment(4, "Gare du Nord", "Reaumur Sebastopol", 5, false);
+            Fragment f20 = new Fragment(4, "Reaumur Sebastopol", "Chatelet", 3, false);
+            Fragment f21 = new Fragment(4, "Chatelet", "Montparnasse", 13, false);
+            Fragment f22 = new Fragment(4, "Montparnasse", "Porte d'Orleans", 6, false);
             //ligne 5 - framgents
             Fragment f23 = new Fragment(5, "Bobigny", "Stalingrad", 10, false);
             Fragment f24 = new Fragment(5, "Stalingrad", "Gare du Nord", 6, false);
-            Fragment f25 = new Fragment(5, "Gare du Nord", "République", 6, false);
-            Fragment f26 = new Fragment(5, "République", "Bastille", 12, false);
+            Fragment f25 = new Fragment(5, "Gare du Nord", "Republique", 6, false);
+            Fragment f26 = new Fragment(5, "Republique", "Bastille", 12, false);
             Fragment f27 = new Fragment(5, "Bastille", "Place d'Italie", 13, false);
             //ligne 6 - fragments
             Fragment f28 = new Fragment(6, "Charles de Gaulle", "Montparnasse", 15, false);
             Fragment f29 = new Fragment(6, "Montparnasse", "Place d'Italie", 5, false);
             Fragment f30 = new Fragment(6, "Place d'Italie", "Nation", 15, false);
             //ligne 1 - stations
-            Station ladef = new Station("La Défense", false, 5);
+            Station ladef = new Station("La Defense", false, 5);
             ladef.addFragment(f1);
             Station charl = new Station("Charles de Gaulle", false, 3);
             charl.addFragment(f1);
@@ -93,7 +93,7 @@ public class Station implements Serializable {
             charl.addFragment(f6);
             charl.addFragment(f7);
             charl.addFragment(f28);
-            Station chatel = new Station("Châtelet", false, 2);
+            Station chatel = new Station("Chatelet", false, 2);
             chatel.addFragment(f2);
             chatel.addFragment(f3);
             chatel.addFragment(f20);
@@ -125,7 +125,7 @@ public class Station implements Serializable {
             villi.addFragment(f8);
             villi.addFragment(f12);
             villi.addFragment(f13);
-            Station barbe = new Station("Barbès", false, 5);
+            Station barbe = new Station("Barbes", false, 5);
             barbe.addFragment(f8);
             barbe.addFragment(f9);
             barbe.addFragment(f17);
@@ -135,7 +135,7 @@ public class Station implements Serializable {
             stali.addFragment(f10);
             stali.addFragment(f23);
             stali.addFragment(f24);
-            Station perel = new Station("Père Lachaise", false, 5);
+            Station perel = new Station("Pere Lachaise", false, 5);
             perel.addFragment(f10);
             perel.addFragment(f11);
             perel.addFragment(f15);
@@ -151,12 +151,12 @@ public class Station implements Serializable {
             //ligne 3 - stations
             Station pontl = new Station("Pont de Levallois", false, 5);
             pontl.addFragment(f12);
-            Station reaum = new Station("Réaumur Sébastopol", false, 5);
+            Station reaum = new Station("Reaumur Sebastopol", false, 5);
             reaum.addFragment(f13);
             reaum.addFragment(f14);
             reaum.addFragment(f19);
             reaum.addFragment(f20);
-            Station repub = new Station("République", false, 5);
+            Station repub = new Station("Republique", false, 5);
             repub.addFragment(f14);
             repub.addFragment(f15);
             repub.addFragment(f25);
@@ -184,7 +184,7 @@ public class Station implements Serializable {
             monpa.addFragment(f22);
             monpa.addFragment(f28);
             monpa.addFragment(f29);
-            Station porteo = new Station("Porte d'Orléans", false, 5);
+            Station porteo = new Station("Porte d'Orleans", false, 5);
             porteo.addFragment(f22);
             
             //ligne 4
@@ -318,8 +318,12 @@ public class Station implements Serializable {
     
     public ArrayList<Station> stationsProches() {
     	ArrayList<Station> tmp = new ArrayList<Station>();
-    	for (Fragment f : lfrag)
-    		tmp.add(recherche(f.getDepart()));
+    	for (Fragment f : lfrag){
+            if(f.getArrivee().compareTo(this.getName())!=0)
+    		tmp.add(recherche(f.getArrivee()));
+            else
+                tmp.add(recherche(f.getDepart()));
+        }
     	return tmp;
     }
     
@@ -377,7 +381,7 @@ public class Station implements Serializable {
             for(int i =1;i<trajet.size();i++){
                 if(trajet.get(i).getLligne()!=ligneCourante){
                     ligneCourante = trajet.get(i).getLligne();
-                    res+="\nArrivé a "+trajet.get(i).getDepart()+" prenez la lignne "+ligneCourante+" en direction de "+trajet.get(i).getArrivee();
+                    res+="\nArrive a "+trajet.get(i).getDepart()+" prenez la lignne "+ligneCourante+" en direction de "+trajet.get(i).getArrivee();
                 }else
                     res+="\nVous passez par "+trajet.get(i).getArrivee();
             }
@@ -385,4 +389,11 @@ public class Station implements Serializable {
         return res;
     }
     
+     public String avertIncident() {
+    	String ret = "La station fonctionne normalement";
+    	if (this.isIncident()) {
+    		ret = ("Incident en cours dans la station " + this.name);
+    	}
+    	return ret;
+    }
 }

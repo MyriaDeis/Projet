@@ -33,10 +33,6 @@ public class Fragment implements Serializable{
         return incident;
     }
 
-    public int getTemps(){
-        return tps_parcours;
-    }
-
     public void setIncident(boolean incident) {
         this.incident = incident;
     }
