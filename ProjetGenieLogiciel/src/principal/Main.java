@@ -32,61 +32,65 @@ public class Main {
             System.out.println("6-Connaitre les stations les plus proches");
             System.out.println("7-Connaitre le temps de trajet entre deux stations");
             System.out.println("8-Quitter");
-            chx = sc.nextInt();
-            switch(chx) {
+                try{
+                chx = sc.nextInt();
+                switch(chx) {
 
-            case 1 :
-                    System.out.println("A quelle station voulez-vous arriver?");
-                    String s = sc.next();
-                    System.out.println(Station.afficheTrajet(Station.fastestWay(statCourante.getName(), s)));
-                    break;
-            case 2 :
-                    System.out.println("A quelle station voulez-vous arriver?");
-                    String sa = sc.next();
-                    System.out.println("Itinéraire avec le moins de changment de ligne possible :\n");
-                    System.out.println(Station.afficheTrajet(Station.bestWay(statCourante.getName(), sa)));
-                    break;
-            case 3 :
-                    System.out.println("A quelle station voulez-vous arriver?");
-                    String st = sc.next();
-                    System.out.println("Par quelle station voulez-vous passer?");
-                    String perso = sc.next();
-                    System.out.println(Station.afficheTrajet(Station.personalWay(statCourante.getName(), perso, st)));
-                    break;
-            case 4 :
-                    System.out.println("Quelle est la ligne dont vous voulez connaitre l'état?");
-                    String sl = sc.next();
-                    //System.out.println(avertIncident(sl));
-                    break;
-            case 5 :
-                    System.out.println("Quelle est la station dont vous voulez connaitre l'état?");
-                    String so = sc.next();
-                    //System.out.println(avertIncident(so));
-                    break;
-            case 6 :
-                    ArrayList<Station> fstation = statCourante.stationsProches();
-                    System.out.println("Stations proches de "+statCourante.getName()+" :\n");
-                    for (int i = 0; i <= fstation.size(); i++) {
-                        System.out.println(fstation.get(i).getName()+"\n");
-                    }
+                case 1 :
+                        System.out.println("A quelle station voulez-vous arriver?");
+                        String s = sc.next();
+                        System.out.println(Station.afficheTrajet(Station.fastestWay(statCourante.getName(), s)));
+                        break;
+                case 2 :
+                        System.out.println("A quelle station voulez-vous arriver?");
+                        String sa = sc.next();
+                        System.out.println("Itinéraire avec le moins de changment de ligne possible :\n");
+                        System.out.println(Station.afficheTrajet(Station.bestWay(statCourante.getName(), sa)));
+                        break;
+                case 3 :
+                        System.out.println("A quelle station voulez-vous arriver?");
+                        String st = sc.next();
+                        System.out.println("Par quelle station voulez-vous passer?");
+                        String perso = sc.next();
+                        System.out.println(Station.afficheTrajet(Station.personalWay(statCourante.getName(), perso, st)));
+                        break;
+                case 4 :
+                        System.out.println("Quelle est la ligne dont vous voulez connaitre l'état?");
+                        String sl = sc.next();
+                        //System.out.println(avertIncident(sl));
+                        break;
+                case 5 :
+                        System.out.println("Quelle est la station dont vous voulez connaitre l'état?");
+                        String so = sc.next();
+                        //System.out.println(avertIncident(so));
+                        break;
+                case 6 :
+                        ArrayList<Station> fstation = statCourante.stationsProches();
+                        System.out.println("Stations proches de "+statCourante.getName()+" :\n");
+                        for (int i = 0; i <= fstation.size(); i++) {
+                            System.out.println(fstation.get(i).getName()+"\n");
+                        }
 
-                    break;
-            case 7 :
-                    System.out.println("Quelle est la station dont vous voulez partir?");
-                    String sdep = sc.next();
-                    System.out.println("Quelle est la station où vous voulez arriver?");
-                    String sarr = sc.next();
-                    int tps = 0;//Station.getTempsParcours(sdep, sarr);
-                    System.out.println("Entre la station " + sdep + " et la station " + sarr + ", il y a " + tps + " minutes de trajet");
-                    break;
-            case 8 :
-                    System.out.println("La ville de Paris vous remercie d'avoir utilisé ItiMiage");
-                    System.out.println("A la prochaine");
-                    break;
-            default :
-                    System.out.println("Erreur de saisie");
-                    break;
-            }
+                        break;
+                case 7 :
+                        System.out.println("Quelle est la station dont vous voulez partir?");
+                        String sdep = sc.next();
+                        System.out.println("Quelle est la station où vous voulez arriver?");
+                        String sarr = sc.next();
+                        int tps = 0;//Station.getTempsParcours(sdep, sarr);
+                        System.out.println("Entre la station " + sdep + " et la station " + sarr + ", il y a " + tps + " minutes de trajet");
+                        break;
+                case 8 :
+                        System.out.println("La ville de Paris vous remercie d'avoir utilisé ItiMiage");
+                        System.out.println("A la prochaine");
+                        break;
+                default :
+                        System.out.println("Erreur de saisie");
+                        break;
+                }
+                }catch (Exception e){
+                    System.out.println("Problème avec une station entrée");
+                }
         }
     }
 }
