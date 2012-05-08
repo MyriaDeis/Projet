@@ -375,7 +375,7 @@ public class Station implements Serializable {
     
     public static String afficheTrajet(ArrayList<Fragment> trajet){
         String res = "Aucun chemin disponible";
-        if(!trajet.isEmpty()||trajet!=null){
+        if(!trajet.isEmpty()){
             int ligneCourante = trajet.get(0).getLligne();
             res="Prenez la ligne "+ligneCourante+" en diretion de "+trajet.get(0).getArrivee();
             for(int i =1;i<trajet.size();i++){
