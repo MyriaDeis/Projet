@@ -25,6 +25,8 @@ public class Station implements Serializable {
     private boolean incident;
     private int tps_arret;
 
+    private static ArrayList<ArrayList<Fragment>> recherche;
+
     public Station(String name, boolean incident, int tps_arret) {
         this.name = name;
         this.lfrag = new HashSet<Fragment>();
@@ -221,38 +223,42 @@ public class Station implements Serializable {
 /*
  * en principe terminé
  */
-    public static ArrayList<ArrayList<Fragment>> chemin(ArrayList<Fragment> parcours, Station depart, Station but, ArrayList<ArrayList<Fragment>> list) { // parcours : effectuï¿½ jusqu'ï¿½ prï¿½sent
-		if (parcours.size() == 0) { // on commence la recherche
-			for (Fragment f : depart.lfrag) {
-				ArrayList<Fragment> tmp = new ArrayList<Fragment>();
-				tmp.add(f);
-				chemin(tmp, depart, but, list);
+    public static void chemin(ArrayList<Fragment> parcours, String depart, String arrivee) { // parcours : effectuï¿½ jusqu'ï¿½ prï¿½sent
+		Station but = lstation.get(arrivee);
+		if (parcours == null) { // on commence la recherche
+			Station dep = lstation.get(depart);
+			recherche = new ArrayList<ArrayList<Fragment>>();
+			for (Fragment f : dep.lfrag) {
+				if (f.getDepart().compareTo(dep.name) == 0) {
+					ArrayList<Fragment> tmp = new ArrayList<Fragment>();
+					tmp.add(f);
+					chemin(tmp, depart, arrivee);
+				}
 			}
 		} else {
-			if (parcours.get(parcours.size()).getArrivee().compareTo(but.name) == 0) { // condition d'arrêt : chemin trouvé entre les 2 stations
+			if (parcours.get(parcours.size() - 1).getArrivee().compareTo(but.name) == 0) { // condition d'arrêt : chemin trouvé entre les 2 stations
 				// ajout de ce parcours à " tous "
-				list.add(parcours);
+				recherche.add(parcours);
 			} else {
 				// sinon on explore les fragments suivants
-				Station s_tmp = lstation.get(parcours.get(parcours.size()).getArrivee());
+				Station s_tmp = lstation.get(parcours.get(parcours.size() - 1).getArrivee());
 				for (Fragment f : s_tmp.lfrag) {
 					// 																		.. et si on n'est pas déjà passé par ce fragment
-					if (parcours.get(parcours.size()).getArrivee().compareTo(f.getDepart()) == 0 && !(parcours.contains(f))) {
+					if (parcours.get(parcours.size() - 1).getArrivee().compareTo(f.getDepart()) == 0 && !(parcours.contains(f))) {
 						ArrayList<Fragment> copieParcours = parcours;
-						copieParcours.add(f);
-						chemin(copieParcours, depart, but, list);
+						copieParcours.add(copieParcours.size(), f);
+						chemin(copieParcours, depart, arrivee);
 					}
-				}	
+				}
 			}
 		}
-		return list;
 	}
     
-	public static ArrayList<Fragment> fastestWay(Station depart, Station but) {
+	public static ArrayList<Fragment> fastestWay(String depart, String arrivee) {
 		int temps_parcours = 2222, tmp;
 		ArrayList<Fragment> itineraire = new ArrayList<Fragment>();
-		ArrayList<ArrayList<Fragment>> list = chemin(null, depart, but, new ArrayList<ArrayList<Fragment>>());
-		for (ArrayList<Fragment> l : list) {
+		chemin(null, depart, arrivee);
+		for (ArrayList<Fragment> l : recherche) {
 			tmp = 0;
 			for (Fragment f : l)
 				tmp += f.getTps_parcours();
@@ -267,11 +273,11 @@ public class Station implements Serializable {
 /*
  * itinéraire avec le moins de changements de ligne
  */
-	public static ArrayList<Fragment> bestWay(Station depart, Station but) {
+	public static ArrayList<Fragment> bestWay(String depart, String arrivee) {
 		int nb_chgt = 5555, tmp = 0;
 		ArrayList<Fragment> itineraire = new ArrayList<Fragment>();
-		ArrayList<ArrayList<Fragment>> list = chemin(null, depart, but, new ArrayList<ArrayList<Fragment>>());
-		for (ArrayList<Fragment> l : list) {
+		chemin(null, depart, arrivee);
+		for (ArrayList<Fragment> l : recherche) {
 			tmp = l.size();
 			if (tmp < nb_chgt) {
 				itineraire = l;
@@ -283,12 +289,14 @@ public class Station implements Serializable {
 /*
  * itinéraire personnalisé (et le plus rapide)
  */
-	public static ArrayList<Fragment> personnalWay(Station depart, Station desiree, Station but) {
+	public static ArrayList<Fragment> personalWay(String depart, String inter, String arrivee) {
+		Station desiree = lstation.get(inter);
 		boolean passeParDesiree;
 		int temps_parcours = 2222, tmp;
 		ArrayList<Fragment> itineraire = new ArrayList<Fragment>();
-		ArrayList<ArrayList<Fragment>> list = chemin(null, depart, but, new ArrayList<ArrayList<Fragment>>());
-		for (ArrayList<Fragment> l : list) {
+		
+		chemin(null, depart, arrivee);
+		for (ArrayList<Fragment> l : recherche) {
 			passeParDesiree = false;
 			tmp = 0;
 			for (Fragment f : l) {

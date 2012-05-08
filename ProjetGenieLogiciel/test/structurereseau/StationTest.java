@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.*;
+
 import static org.junit.Assert.*;
 import principal.GestionFichier;
 
@@ -44,7 +45,7 @@ public class StationTest {
         Station result = Station.recherche(nom);
         assertEquals(expResult, result.getName());
     }
-
+/*
     @Test
     public void testTempsEntre2Stations() {
     	ArrayList<Station> list = (ArrayList<Station>) Station.getLstation().values();
@@ -54,7 +55,7 @@ public class StationTest {
     	}
 		assertEquals(s1.tempsEntre2Stations(s2), s2.tempsEntre2Stations(s1));
     }
-    
+  */  
     @Test
 	public void testStationsProches() { // �a marche nickel !
     	ArrayList<Station> tmp;
@@ -69,5 +70,64 @@ public class StationTest {
     @Test
     public void testChemin() {
     	
+    }
+  
+    /**
+     * Test of fastestWay method, of class Ligne.
+     */
+    @Test
+    public void testFastestWay() {
+        System.out.println("fastestWay");
+        assertEquals(true, Station.fastestWay("Bobigny", "Gare du Nord").containsAll(Station.fastestWay("Gare du Nord", "Bobigny")));
+/*      String depart = "La Défense";
+        String arrivee = "Place d'Italie";
+        ArrayList<Fragment> expResult = new ArrayList<Fragment>();
+        expResult.add(new Fragment(1, "La Défense", "Charles de Gaulle", 5, false));
+        expResult.add(new Fragment(6, "Charles de Gaulle", "Montparnasse", 15, false));
+        expResult.add(new Fragment(6, "Montparnasse", "Place d'Italie", 5, false));
+        ArrayList<Fragment> result = Station.fastestWay(depart, arrivee);*/
+    }
+
+    /**
+     * Test of bestWay method, of class Ligne.
+     */
+    @Test
+    public void testBestWay() {
+        System.out.println("bestWay");
+        assertEquals(true, Station.bestWay("Bobigny", "Gare du Nord").containsAll(Station.bestWay("Gare du Nord", "Bobigny")));
+/*      String depart = "La Défense";
+        String arrivee = "Place d'Italie";
+        ArrayList<Fragment> expResult = new ArrayList<Fragment>();
+        expResult.add(new Fragment(1, "La Défense", "Charles de Gaulle", 5, false));
+        expResult.add(new Fragment(6, "Charles de Gaulle", "Montparnasse", 15, false));
+        expResult.add(new Fragment(6, "Montparnasse", "Place d'Italie", 5, false));
+        ArrayList<Fragment> result = Station.bestWay(depart, arrivee);
+        assertEquals(expResult.toString(), result.toString());
+*/
+
+    }
+
+    /**
+     * Test of personalWay method, of class Ligne.
+     */
+    @Test
+    public void testPersonalWay() {
+        System.out.println("personalWay");
+        assertEquals(true, Station.personalWay("Bobigny", "Stalingrad", "Gare du Nord").containsAll(Station.personalWay("Gare du Nord", "Stalingrad", "Bobigny")));
+/*      String depart = "La Défense";
+        String inter = "République";
+        String arrivee = "Place d'Italie";
+        ArrayList<Fragment> expResult = new ArrayList<Fragment>();
+        expResult.add(new Fragment(1, "La Défense", "Charles de Gaulle", 5, false));
+        expResult.add(new Fragment(2, "Charles de Gaulle", "Villiers", 6, false));
+        expResult.add(new Fragment(2, "Villiers", "Barbès", 10, false));
+        expResult.add(new Fragment(2, "Barbès", "Stalingrad", 8, false));
+        expResult.add(new Fragment(5, "Stalingrad", "Gare du Nord", 6, false));
+        expResult.add(new Fragment(5, "Gare du Nord", "République", 6, false));
+        expResult.add(new Fragment(5, "République", "Bastille", 12, false));
+        expResult.add(new Fragment(5, "Bastille", "Place d'Italie", 13, false));
+        ArrayList<Fragment> result = Station.personalWay(depart, inter, arrivee);
+        assertEquals(expResult.toString(), result.toString());
+*/
     }
 }
