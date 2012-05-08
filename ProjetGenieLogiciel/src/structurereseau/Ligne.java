@@ -48,6 +48,7 @@ public class Ligne implements Serializable{
         Ligne.lLignes = lLignes;
     }
 
+<<<<<<< HEAD
     public static void printWays(){
         ArrayList<ArrayList<Fragment>> chemins=Ligne.findWays("La Défense", "Place d'Italie");
         System.out.println("il y a "+chemins.size()+" de chemin");
@@ -106,10 +107,18 @@ public class Ligne implements Serializable{
             return chemins.get(ind);
         }
         else
+=======
+    public ArrayList<Fragment> getLfrag() {
+        return lfrag;
+    }
+
+    public static ArrayList<Fragment> fastestWay(String depart, String arrivee){
+>>>>>>> abffccc75033ad4d5593d5a6b4c85ee3a3d39373
             return null;
     }
 
     public static ArrayList<Fragment> bestWay(String depart, String arrivee){
+<<<<<<< HEAD
         ArrayList<ArrayList<Fragment>> chemins=Ligne.findWays(depart, arrivee);
 
         if(chemins.size()!=0){
@@ -132,10 +141,13 @@ public class Ligne implements Serializable{
             return chemins.get(ind);
         }
         else
+=======
+>>>>>>> abffccc75033ad4d5593d5a6b4c85ee3a3d39373
             return null;
     }
 
     public static ArrayList<Fragment> personalWay(String depart, String inter, String arrivee){
+<<<<<<< HEAD
         //retourne null si aucun chemin
         ArrayList<Fragment> chemin=Ligne.bestWay(depart, inter);
         ArrayList<Fragment> chemin2=Ligne.bestWay(inter, arrivee);
@@ -180,4 +192,12 @@ public class Ligne implements Serializable{
 
     }
     
+=======
+            return null;
+    }
+
+>>>>>>> abffccc75033ad4d5593d5a6b4c85ee3a3d39373
 }
+
+
+

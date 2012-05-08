@@ -6,9 +6,7 @@ package structurereseau;
 
 import java.io.*;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import principal.GestionFichier;
@@ -25,6 +23,8 @@ public class Station implements Serializable {
     private boolean incident;
     private int tps_arret;
 
+    private static ArrayList<ArrayList<Fragment>> recherche;
+
     public Station(String name, boolean incident, int tps_arret) {
         this.name = name;
         this.lfrag = new HashSet<Fragment>();
@@ -33,12 +33,22 @@ public class Station implements Serializable {
         Station.lstation.put(name, this);
     }
 
+ /*
+ * méthode initialiseCarte utilise un fichier de sauvegarde pour initialiser le réseau si il est présent, sinon il
+ * le crée puis le sauvegarde
+ */  
     public static void initialiseCarte(){
         File reseau = new File("carte");
         if(reseau.exists()){
             GestionFichier.loadReseau();           
         }else{
-            //ligne 1 - fragments
+            initialiseReseau();
+            GestionFichier.saveReseau();
+        }
+    }
+    
+    public static void initialiseReseau(){
+        //ligne 1 - fragments
             Fragment f1 = new Fragment(1, "La Défense", "Charles de Gaulle", 5, false);
             Fragment f2 = new Fragment(1, "Charles de Gaulle", "Châtelet", 2, false);
             Fragment f3 = new Fragment(1, "Châtelet", "Bastille", 9, false);
@@ -207,18 +217,111 @@ public class Station implements Serializable {
             six.addFragment(f29);
             six.addFragment(f30);
 
-            GestionFichier.saveReseau();
-        }
     }
+
+/*
+ * en principe termin�
+ */
+    public static void chemin(ArrayList<Fragment> parcours, String depart, String arrivee) { // parcours : effectu� jusqu'� pr�sent
+		Station but = lstation.get(arrivee);
+		if (parcours == null) { // on commence la recherche
+			Station dep = lstation.get(depart);
+			recherche = new ArrayList<ArrayList<Fragment>>();
+			for (Fragment f : dep.lfrag) {
+				if (f.getDepart().compareTo(dep.name) == 0) {
+					ArrayList<Fragment> tmp = new ArrayList<Fragment>();
+					tmp.add(f);
+					chemin(tmp, depart, arrivee);
+				}
+			}
+		} else {
+			if (parcours.get(parcours.size() - 1).getArrivee().compareTo(but.name) == 0) { // condition d'arr�t : chemin trouv� entre les 2 stations
+				// ajout de ce parcours � " tous "
+				recherche.add(parcours);
+			} else {
+				// sinon on explore les fragments suivants
+				Station s_tmp = lstation.get(parcours.get(parcours.size() - 1).getArrivee());
+				for (Fragment f : s_tmp.lfrag) {
+					// 																		.. et si on n'est pas d�j� pass� par ce fragment
+					if (parcours.get(parcours.size() - 1).getArrivee().compareTo(f.getDepart()) == 0 && !(parcours.contains(f))) {
+						ArrayList<Fragment> copieParcours = parcours;
+						copieParcours.add(copieParcours.size(), f);
+						chemin(copieParcours, depart, arrivee);
+					}
+				}
+			}
+		}
+	}
     
-    
-    
-    public static Station recherche(String nom){
+	public static ArrayList<Fragment> fastestWay(String depart, String arrivee) {
+		int temps_parcours = 2222, tmp;
+		ArrayList<Fragment> itineraire = new ArrayList<Fragment>();
+		chemin(null, depart, arrivee);
+		for (ArrayList<Fragment> l : recherche) {
+			tmp = 0;
+			for (Fragment f : l)
+				tmp += f.getTps_parcours();
+			if (tmp < temps_parcours) {
+				temps_parcours = tmp;
+				itineraire = l;
+			}
+		}
+		return itineraire;
+	}
+	
+/*
+ * itin�raire avec le moins de changements de ligne
+ */
+	public static ArrayList<Fragment> bestWay(String depart, String arrivee) {
+		int nb_chgt = 5555, tmp = 0;
+		ArrayList<Fragment> itineraire = new ArrayList<Fragment>();
+		chemin(null, depart, arrivee);
+		for (ArrayList<Fragment> l : recherche) {
+			tmp = l.size();
+			if (tmp < nb_chgt) {
+				itineraire = l;
+				nb_chgt = tmp;
+			}
+		}
+		return itineraire;
+	}
+/*
+ * itin�raire personnalis� (et le plus rapide)
+ */
+	public static ArrayList<Fragment> personalWay(String depart, String inter, String arrivee) {
+		Station desiree = lstation.get(inter);
+		boolean passeParDesiree;
+		int temps_parcours = 2222, tmp;
+		ArrayList<Fragment> itineraire = new ArrayList<Fragment>();
+		
+		chemin(null, depart, arrivee);
+		for (ArrayList<Fragment> l : recherche) {
+			passeParDesiree = false;
+			tmp = 0;
+			for (Fragment f : l) {
+				tmp += f.getTps_parcours();
+				if (f.getArrivee().compareTo(desiree.name) == 0)
+					passeParDesiree = true;
+			}
+			if (tmp < temps_parcours && passeParDesiree) {
+				temps_parcours = tmp;
+				itineraire = l;
+			}
+		}
+		return itineraire;
+	}
+	
+	public static Station recherche(String nom){
         Station st = lstation.get(nom);      
         return st;        
     }
     
-    
+    public ArrayList<Station> stationsProches() {
+    	ArrayList<Station> tmp = new ArrayList<Station>();
+    	for (Fragment f : lfrag)
+    		tmp.add(recherche(f.getDepart()));
+    	return tmp;
+    }
     
     
     /*
@@ -260,6 +363,26 @@ public class Station implements Serializable {
     public HashSet<Fragment> getLfrag() {
         return lfrag;
     }
+    public static Station geolocalisation(){
+        Random generator = new Random();
+        Object[] values = (Station.getLstation().values().toArray());
+        return (Station)(values[generator.nextInt(values.length)]);
+    }
     
+    public static String afficheTrajet(ArrayList<Fragment> trajet){
+        String res = "Aucun chemin disponible";
+        if(!trajet.isEmpty()){
+            int ligneCourante = trajet.get(0).getLligne();
+            res="Prenez la ligne "+ligneCourante+" en diretion de "+trajet.get(0).getArrivee();
+            for(int i =1;i<trajet.size();i++){
+                if(trajet.get(i).getLligne()!=ligneCourante){
+                    ligneCourante = trajet.get(i).getLligne();
+                    res+="\nArrivé a "+trajet.get(i).getDepart()+" prenez la lignne "+ligneCourante+" en direction de "+trajet.get(i).getArrivee();
+                }else
+                    res+="\nVous passez par "+trajet.get(i).getArrivee();
+            }
+        }
+        return res;
+    }
     
 }
