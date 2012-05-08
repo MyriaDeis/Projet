@@ -38,7 +38,7 @@ public class Main {
 
                     case 1 :
                             System.out.println("A quelle station voulez-vous arriver?");
-                            String s = sc.next();
+                            String s = sc.nextLine();
                             System.out.println(Station.afficheTrajet(Ligne.fastestWay(statCourante.getName(), s)));
                             break;
                     case 2 :

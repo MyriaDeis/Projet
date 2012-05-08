@@ -107,7 +107,6 @@ public class Ligne implements Serializable{
         ArrayList<Fragment> chemin=Ligne.bestWay(depart, inter);
         ArrayList<Fragment> chemin2=Ligne.bestWay(inter, arrivee);
         if(chemin!=null && chemin2!=null){
-            System.out.println(chemin.size()+" "+chemin2.size());
             chemin.addAll(chemin2);
             return chemin;
         }
